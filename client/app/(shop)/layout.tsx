@@ -8,7 +8,7 @@ export default function layout({
     return (
         <div>
             <ShopHeader />
-            {children}
+            <div className="pt-[70px]">{children}</div>
         </div>
     );
 }
