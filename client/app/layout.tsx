@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { BBH_Sans_Bartle, Roboto } from "next/font/google";
 import "./globals.css";
 
 const roboto = Roboto({
     variable: "--font-roboto",
     subsets: ["latin"],
+});
+
+const bartle = BBH_Sans_Bartle({
+    variable: "--font-bartle",
+    subsets: ["latin"],
+    weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -19,7 +25,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${roboto.variable} antialiased`}>{children}</body>
+            <body
+                className={`${roboto.variable} ${bartle.variable} antialiased`}
+            >
+                {children}
+            </body>
         </html>
     );
 }

@@ -1,9 +1,16 @@
 @import "tailwindcss";
 
 body {
-    font-family: Roboto, sans-serif;
+    font-family: var(--font-roboto);
 }
 
 button{
     cursor: pointer;
 }
+
+.font-bartle {
+    font-family: var(--font-bartle);
+}
+
+
+
