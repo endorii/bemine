@@ -4,29 +4,17 @@ import {
     ChevronRightIcon,
     FacebookIcon,
     InstagramIcon,
-    SearchIcon,
     YoutubeIcon,
 } from "lucide-react";
 import { useState } from "react";
 
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
+import { SearchInput } from "@/src/shared/components";
 import { CATEGORIES } from "@/src/shared/data/CATEGORIES";
-import { USA_STATES } from "@/src/shared/data/USA_STATES";
 import { WrapperContainer } from "@/src/shared/wrappers";
 import Link from "next/link";
 
 export default function CategoriesSection() {
     const [openCategory, setOpenCategory] = useState<string | null>(null);
-    const [selectedState, setSelectedState] = useState<string>("");
-    const [selectedCity, setSelectedCity] = useState<string>("");
 
     const toggleCategory = (name: string) => {
         setOpenCategory((prev) => (prev === name ? null : name));
@@ -34,92 +22,7 @@ export default function CategoriesSection() {
 
     return (
         <div className="flex flex-col">
-            <WrapperContainer className="px-20 py-7 bg-blue-600/20">
-                <div className="relative flex items-center w-full">
-                    <input
-                        type="text"
-                        placeholder="Search of any product or brand..."
-                        className="px-7 py-4 rounded-l-3xl outline-0  w-full bg-white transition-colors"
-                    />
-
-                    <div className="flex gap-1 bg-white rounded-r-3xl">
-                        <Select
-                            onValueChange={(value) => {
-                                setSelectedState(value);
-                                setSelectedCity("");
-                            }}
-                        >
-                            <SelectTrigger className="w-[100px] bg-white h-full! border-0 rounded-none py-4.5 shadow-none outline-0!">
-                                <SelectValue placeholder="State" />
-                            </SelectTrigger>
-
-                            <SelectContent
-                                position="popper"
-                                side="bottom"
-                                sideOffset={4}
-                                className="max-h-[300px] overflow-y-auto"
-                            >
-                                <SelectGroup>
-                                    <SelectLabel>State</SelectLabel>
-
-                                    {Object.keys(USA_STATES).map((state) => (
-                                        <SelectItem key={state} value={state}>
-                                            {state}
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                        <Select
-                            onValueChange={(value) => {
-                                setSelectedCity(value);
-                            }}
-                            disabled={!selectedState}
-                        >
-                            <SelectTrigger className="w-[200px] bg-white h-full! border-0 rounded-none py-4.5 shadow-none">
-                                <SelectValue placeholder="Select a city" />
-                            </SelectTrigger>
-
-                            <SelectContent
-                                position="popper"
-                                side="bottom"
-                                sideOffset={4}
-                                className="max-h-[300px] overflow-y-auto"
-                            >
-                                <SelectGroup>
-                                    <SelectLabel>City</SelectLabel>
-
-                                    {selectedState &&
-                                        USA_STATES[selectedState].map(
-                                            (city) => (
-                                                <SelectItem
-                                                    key={city}
-                                                    value={city}
-                                                >
-                                                    {city}
-                                                </SelectItem>
-                                            )
-                                        )}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-
-                        <button
-                            className="flex items-center justify-center gap-2 px-4 py-3.5 font-medium rounded-r-3xl text-white hover:text-white bg-blue-600 hover:bg-blue-700 transition"
-                            onClick={() => {
-                                console.log(
-                                    "Filter by:",
-                                    selectedState,
-                                    selectedCity
-                                );
-                            }}
-                        >
-                            <SearchIcon />
-                            <div>Search</div>
-                        </button>
-                    </div>
-                </div>
-            </WrapperContainer>
+            <SearchInput />
 
             <WrapperContainer className="flex flex-col py-[70px] gap-[50px]">
                 <h2 className="text-[32px] font-bold text-center ">
@@ -173,6 +76,7 @@ export default function CategoriesSection() {
                     ))}
                 </div>
             </WrapperContainer>
+
             <WrapperContainer className="flex flex-col gap-5 items-center justify-center p-40 bg-blue-600/5">
                 <div className="text-2xl font-bartle">bemine</div>
                 <div className="max-w-[800px] text-center text-blue-950/70">
