@@ -1,3 +1,4 @@
+import { ApolloWrapper } from "@/src/shared/wrappers/components/ApolloWrapper";
 import type { Metadata } from "next";
 import { BBH_Sans_Bartle, Roboto } from "next/font/google";
 import "./globals.css";
@@ -28,7 +29,7 @@ export default function RootLayout({
             <body
                 className={`${roboto.variable} ${bartle.variable} antialiased`}
             >
-                {children}
+                <ApolloWrapper>{children}</ApolloWrapper>
             </body>
         </html>
     );
