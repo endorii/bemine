@@ -8,17 +8,17 @@ datasource db {
 }
 
 enum AttributeType {
-  TEXT // brand, model
-  NUMBER // price, year, mileage
-  SELECT // color, fuelType
-  BOOLEAN // new / used
+  TEXT
+  NUMBER
+  SELECT
+  BOOLEAN
 }
 
 model Section {
-  id    String @id @default(cuid())
-  slug  String @unique
-  title String
-
+  id         String     @id @default(cuid())
+  slug       String     @unique
+  title      String
+  banner     String?
   categories Category[]
 
   createdAt DateTime @default(now())
@@ -35,6 +35,10 @@ model Category {
 
   products   Product[]
   attributes Attribute[]
+
+  parentId String?
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryTree")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -59,8 +63,8 @@ model Product {
 
 model Attribute {
   id    String        @id @default(cuid())
-  name  String // brand, year, color
-  label String // Brand, Year, Color
+  name  String
+  label String
   type  AttributeType
 
   categoryId String
@@ -83,7 +87,7 @@ model AttributeValue {
   attributeId String
   attribute   Attribute @relation(fields: [attributeId], references: [id])
 
-  value String // "Apple", "2022", "Red", "true"
+  value String
 
   createdAt DateTime @default(now())
 

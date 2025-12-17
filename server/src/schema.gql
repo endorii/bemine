@@ -1,0 +1,79 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Attribute {
+  category: Category!
+  categoryId: String!
+  createdAt: DateTime!
+  id: ID!
+  label: String!
+  name: String!
+  type: AttributeType!
+  updatedAt: DateTime!
+  values: [AttributeValue!]!
+}
+
+"""Тип атрибуту"""
+enum AttributeType {
+  BOOLEAN
+  NUMBER
+  SELECT
+  TEXT
+}
+
+type AttributeValue {
+  attribute: Attribute!
+  attributeId: String!
+  createdAt: DateTime!
+  id: ID!
+  product: Product!
+  productId: String!
+  value: String!
+}
+
+type Category {
+  attributes: [Attribute!]!
+  children: [Category!]!
+  createdAt: DateTime!
+  id: ID!
+  parent: Category
+  parentId: String
+  products: [Product!]!
+  section: Section!
+  sectionId: String!
+  slug: String!
+  title: String!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Product {
+  category: Category!
+  categoryId: String!
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  price: Int!
+  title: String!
+  updatedAt: DateTime!
+  values: [AttributeValue!]!
+}
+
+type Query {
+  section: [Section!]!
+}
+
+type Section {
+  banner: String
+  categories: [Category!]!
+  createdAt: DateTime!
+  id: ID!
+  slug: String!
+  title: String!
+  updatedAt: DateTime!
+}

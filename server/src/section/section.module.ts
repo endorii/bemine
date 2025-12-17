@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaModule } from "src/prisma/prisma.module";
 import { SectionResolver } from "./section.resolver";
 import { SectionService } from "./section.service";
 
 @Module({
-    imports: [PrismaService],
+    imports: [PrismaModule],
     providers: [SectionResolver, SectionService],
 })
 export class SectionModule {}
