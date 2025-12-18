@@ -15,7 +15,7 @@ export function SectionsList({ sections }: { sections: any }) {
     // const clientQuery = useQuery(GET_SECTIONS);
 
     return (
-        <WrapperContainer className="flex flex-col py-[70px] gap-[50px]">
+        <WrapperContainer className="flex flex-col py-17.5 gap-12.5">
             <h2 className="text-[32px] font-bold text-center ">
                 Categories on bemine
             </h2>
@@ -35,7 +35,7 @@ export function SectionsList({ sections }: { sections: any }) {
                         </span>
 
                         {openCategory === section.title && (
-                            <div className="mt-2 flex flex-col rounded-md shadow-[0px_0px_6px_0px_rgba(0,_0,_0,_0.1)] w-full text-[14px] text-left">
+                            <div className="mt-2 flex flex-col rounded-md shadow-[0px_0px_6px_0px_rgba(0,0,0,0.1)] w-full text-[14px] text-left">
                                 <Link
                                     href={section.slug}
                                     className="flex gap-1 items-center p-3 group hover:bg-blue-50/50 font-semibold py-4"

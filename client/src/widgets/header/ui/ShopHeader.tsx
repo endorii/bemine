@@ -1,14 +1,24 @@
 "use client";
 
+import { LogoIcon } from "@/src/shared/icons";
 import { WrapperContainer } from "@/src/shared/wrappers";
 import { Bell, MessageCircle, UserRound } from "lucide-react";
+import Link from "next/link";
 
 export function ShopHeader() {
     return (
         <div className="flex flex-col">
+            {/* <div className="fixed flex items-center justify-center text-center bg-blue-700 h-[40px] w-full z-10 text-white text- font-bartle">
+                Give second chance for things or find yours
+            </div> */}
             <header className="fixed top-0 left-0 w-full bg-white z-10">
                 <WrapperContainer className="flex items-center justify-between gap-10 w-full min-h-18">
-                    <div className="text-[22px] font-bartle w-fit">bemine</div>
+                    <Link href={"/"} className="flex gap-1 items-center">
+                        <LogoIcon className="w-[70px]" />
+                        <div className="text-[22px] font-bartle w-fit">
+                            bemine
+                        </div>
+                    </Link>
 
                     <div className="flex gap-5 items-center w-fit whitespace-nowrap">
                         <button className="flex items-center gap-2 hover:text-blue-600 transition-colors">
