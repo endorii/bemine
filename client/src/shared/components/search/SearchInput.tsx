@@ -20,7 +20,7 @@ export function SearchInput() {
     const [selectedCity, setSelectedCity] = useState<string>("");
 
     return (
-        <WrapperContainer className="px-20 py-7 bg-blue-600/20">
+        <WrapperContainer className="px-20 py-5 bg-blue-600/20">
             <div className="relative flex items-center w-full">
                 <input
                     type="text"
