@@ -3,6 +3,7 @@ import { WrapperContainer } from "@/src/shared/wrappers";
 import {
     ChevronLeftIcon,
     ChevronRightIcon,
+    ExpandIcon,
     FlagIcon,
     HeartIcon,
     HomeIcon,
@@ -29,14 +30,17 @@ export default function page() {
                     </div>
                     <div className="flex gap-2 w-full relative">
                         <div className="flex flex-col gap-4 w-4/6 ">
-                            <div>
+                            <div className="relative">
                                 <Image
                                     src={"/product.jpg"}
                                     width={1000}
                                     height={1000}
                                     alt="product"
-                                    className="w-"
+                                    className="h-[600px] object-contain"
                                 ></Image>
+                                <button className="absolute bottom-[30px] right-[30px] group bg-white p-2 rounded-full">
+                                    <ExpandIcon className="group-hover:scale-110 transition" />
+                                </button>
                             </div>
                             <div className="flex flex-col gap-7 bg-blue-600/5 rounded-xl p-4">
                                 <div className="flex flex-wrap gap-2">
@@ -139,8 +143,8 @@ export default function page() {
                                     <div className="text-zinc-600 text-sm">
                                         Posted today at 07:07
                                     </div>
-                                    <button className="bg-white p-2 rounded-full">
-                                        <HeartIcon className="stroke-blue-600" />
+                                    <button className="group">
+                                        <HeartIcon className="stroke-blue-600 group-hover:fill-blue-600 group-hover:scale-110 transition" />
                                     </button>
                                 </div>
                                 <div className="text-2xl font-medium">
@@ -248,8 +252,8 @@ export default function page() {
                                     <div className="font-medium">
                                         Cat Regdoll (girl)
                                     </div>
-                                    <button>
-                                        <HeartIcon className="stroke-blue-600" />
+                                    <button className="group">
+                                        <HeartIcon className="stroke-blue-600 group-hover:fill-blue-600 group-hover:scale-110 transition" />
                                     </button>
                                 </div>
                                 <div className="text-xl font-semibold">
@@ -274,8 +278,8 @@ export default function page() {
                                     <div className="font-medium">
                                         Cat Regdoll (girl)
                                     </div>
-                                    <button>
-                                        <HeartIcon className="stroke-blue-600" />
+                                    <button className="group">
+                                        <HeartIcon className="stroke-blue-600 group-hover:fill-blue-600 group-hover:scale-110 transition" />
                                     </button>
                                 </div>
                                 <div className="text-xl font-semibold">
@@ -300,8 +304,8 @@ export default function page() {
                                     <div className="font-medium">
                                         Cat Regdoll (girl)
                                     </div>
-                                    <button>
-                                        <HeartIcon className="stroke-blue-600" />
+                                    <button className="group">
+                                        <HeartIcon className="stroke-blue-600 group-hover:fill-blue-600 group-hover:scale-110 transition" />
                                     </button>
                                 </div>
                                 <div className="text-xl font-semibold">
@@ -326,8 +330,8 @@ export default function page() {
                                     <div className="font-medium">
                                         Cat Regdoll (girl)
                                     </div>
-                                    <button>
-                                        <HeartIcon className="stroke-blue-600" />
+                                    <button className="group">
+                                        <HeartIcon className="stroke-blue-600 group-hover:fill-blue-600 group-hover:scale-110 transition" />
                                     </button>
                                 </div>
                                 <div className="text-xl font-semibold">
@@ -353,8 +357,8 @@ export default function page() {
                                     <div className="font-medium">
                                         Cat Regdoll (girl)
                                     </div>
-                                    <button>
-                                        <HeartIcon className="stroke-blue-600" />
+                                    <button className="group">
+                                        <HeartIcon className="stroke-blue-600 group-hover:fill-blue-600 group-hover:scale-110 transition" />
                                     </button>
                                 </div>
                                 <div className="text-xl font-semibold">
@@ -386,8 +390,8 @@ export default function page() {
                                     <div className="font-medium">
                                         Cat Regdoll (girl)
                                     </div>
-                                    <button>
-                                        <HeartIcon className="stroke-blue-600" />
+                                    <button className="group">
+                                        <HeartIcon className="stroke-blue-600 group-hover:fill-blue-600 group-hover:scale-110 transition" />
                                     </button>
                                 </div>
                                 <div className="text-xl font-semibold">
@@ -412,8 +416,8 @@ export default function page() {
                                     <div className="font-medium">
                                         Cat Regdoll (girl)
                                     </div>
-                                    <button>
-                                        <HeartIcon className="stroke-blue-600" />
+                                    <button className="group">
+                                        <HeartIcon className="stroke-blue-600 group-hover:fill-blue-600 group-hover:scale-110 transition" />
                                     </button>
                                 </div>
                                 <div className="text-xl font-semibold">
@@ -438,8 +442,8 @@ export default function page() {
                                     <div className="font-medium">
                                         Cat Regdoll (girl)
                                     </div>
-                                    <button>
-                                        <HeartIcon className="stroke-blue-600" />
+                                    <button className="group">
+                                        <HeartIcon className="stroke-blue-600 group-hover:fill-blue-600 group-hover:scale-110 transition" />
                                     </button>
                                 </div>
                                 <div className="text-xl font-semibold">
@@ -464,8 +468,8 @@ export default function page() {
                                     <div className="font-medium">
                                         Cat Regdoll (girl)
                                     </div>
-                                    <button>
-                                        <HeartIcon className="stroke-blue-600" />
+                                    <button className="group">
+                                        <HeartIcon className="stroke-blue-600 group-hover:fill-blue-600 group-hover:scale-110 transition" />
                                     </button>
                                 </div>
                                 <div className="text-xl font-semibold">
@@ -491,8 +495,8 @@ export default function page() {
                                     <div className="font-medium">
                                         Cat Regdoll (girl)
                                     </div>
-                                    <button>
-                                        <HeartIcon className="stroke-blue-600" />
+                                    <button className="group">
+                                        <HeartIcon className="stroke-blue-600 group-hover:fill-blue-600 group-hover:scale-110 transition" />
                                     </button>
                                 </div>
                                 <div className="text-xl font-semibold">
