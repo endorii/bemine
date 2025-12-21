@@ -8,9 +8,7 @@ export function Promo() {
             <div className="max-w-[800px] text-center text-blue-950/70">
                 All online ads in USA on Bemine - here you will find what you
                 were looking for! By clicking on the{" "}
-                <span className="text-blue-600 font-bartle">
-                    &quot;Place an announcement&quot;
-                </span>{" "}
+                <span className="text-blue-600 font-bartle">Place an ad&</span>{" "}
                 button, you can place an ad on any topic easily and quickly.
                 With the help of the Bemine service, you can buy or sell almost
                 anything from hand to hand.

@@ -194,7 +194,7 @@ export default function page() {
                                         href={"#"}
                                         className="flex justify-center items-center gap-1 p-2 font-medium"
                                     >
-                                        <div>All author`s announcements</div>
+                                        <div>All author`s ads</div>
                                         <ChevronRightIcon />
                                     </Link>
                                 </div>
@@ -232,7 +232,7 @@ export default function page() {
                 <div className="flex flex-col gap-3">
                     <div className="flex gap-3 items-center">
                         <div className="text-2xl font-medium">
-                            All author`s announcements
+                            All author`s ads
                         </div>
                         <Link href={"#"} className="underline">
                             Look all

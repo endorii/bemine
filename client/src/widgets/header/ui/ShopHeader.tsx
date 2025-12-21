@@ -29,7 +29,7 @@ export function ShopHeader() {
                             <div>Chat</div>
                         </button>
                         <button className="flex items-center gap-2 px-5 py-3 font-medium border-2 border-transparent hover:border-blue-700 rounded-3xl text-white hover:text-blue-700 bg-blue-600 hover:bg-transparent transition">
-                            Place an announcement
+                            Place an ad
                         </button>
                         <button className="flex items-center gap-2 hover:text-blue-600 transition-colors">
                             <UserRound className="size-5" />

@@ -1,95 +1,191 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 enum AttributeType {
-  TEXT
-  NUMBER
-  SELECT
-  BOOLEAN
+    TEXT
+    NUMBER
+    SELECT
+    BOOLEAN
+}
+
+enum RoleEmun {
+    SELLER
+    MODERATOR
+    ADMIN
+}
+
+enum ListingStatus {
+    DRAFT
+    PENDING_MODERATION
+    ACTIVE
+    REJECTED
+    ARCHIVED
+}
+
+enum NotificationType {
+    LISTING_APPROVED
+    LISTING_REJECTED
+    LISTING_FAVORITED
+    PRICE_CHANGED
+    MESSAGE_RECEIVED
+    SYSTEM
 }
 
 model Section {
-  id         String     @id @default(cuid())
-  slug       String     @unique
-  title      String
-  banner     String?
-  categories Category[]
+    id         String     @id @default(cuid())
+    slug       String     @unique
+    title      String
+    banner     String?
+    categories Category[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Category {
-  id    String @id @default(cuid())
-  slug  String
-  title String
+    id    String @id @default(cuid())
+    slug  String
+    title String
 
-  sectionId String
-  section   Section @relation(fields: [sectionId], references: [id])
+    sectionId String
+    section   Section @relation(fields: [sectionId], references: [id])
 
-  products   Product[]
-  attributes Attribute[]
+    listings   Listing[]
+    attributes Attribute[]
 
-  parentId String?
-  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id])
-  children Category[] @relation("CategoryTree")
+    parentId String?
+    parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id])
+    children Category[] @relation("CategoryTree")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-  @@unique([slug, sectionId])
+    @@unique([slug, sectionId])
 }
 
-model Product {
-  id          String  @id @default(cuid())
-  title       String
-  description String?
-  price       Int
+model Listing {
+    id          String   @id @default(cuid())
+    title       String
+    description String?
+    price       Int
+    images      String[]
+    views       Int      @default(0)
+    location    String
 
-  categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
+    status ListingStatus @default(DRAFT)
 
-  values AttributeValue[]
+    categoryId String
+    category   Category @relation(fields: [categoryId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
+
+    values        AttributeValue[]
+    favorites     Favorite[]
+    notifications Notification[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Attribute {
-  id    String        @id @default(cuid())
-  name  String
-  label String
-  type  AttributeType
+    id    String        @id @default(cuid())
+    name  String
+    label String
+    type  AttributeType
 
-  categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
+    categoryId String
+    category   Category @relation(fields: [categoryId], references: [id])
 
-  values AttributeValue[]
+    values AttributeValue[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-  @@unique([name, categoryId])
+    @@unique([name, categoryId])
 }
 
 model AttributeValue {
-  id String @id @default(cuid())
+    id String @id @default(cuid())
 
-  productId String
-  product   Product @relation(fields: [productId], references: [id])
+    listingId String
+    listing   Listing @relation(fields: [listingId], references: [id])
 
-  attributeId String
-  attribute   Attribute @relation(fields: [attributeId], references: [id])
+    attributeId String
+    attribute   Attribute @relation(fields: [attributeId], references: [id])
 
-  value String
+    value String
 
-  createdAt DateTime @default(now())
+    createdAt DateTime @default(now())
 
-  @@unique([productId, attributeId])
+    @@unique([listingId, attributeId])
+}
+
+model User {
+    id       String @id @default(cuid())
+    email    String @unique
+    phone    String @unique
+    password String
+
+    name    String
+    surname String
+
+    avatarUrl  String?   @map("avatar_url")
+    isOnline   Boolean   @default(false) @map("is_online")
+    lastSeenAt DateTime? @map("last_seen_at")
+
+    isVerified               Boolean   @default(false) @map("is_verified")
+    verificationToken        String?   @map("verification_token")
+    verificationTokenExpires DateTime?
+
+    resetPasswordToken        String?   @map("reset_password_token")
+    resetPasswordTokenExpires DateTime? @map("reset_password_token_expires")
+
+    hashedRefreshToken String? @map("hashed_refresh_token")
+
+    role RoleEmun @default(SELLER)
+
+    listings      Listing[]
+    favorites     Favorite[]
+    notifications Notification[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Favorite {
+    id        String  @id @default(cuid())
+    userId    String  @map("user_id")
+    listingId String  @map("listing_id")
+    listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+    user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([userId, listingId])
+}
+
+model Notification {
+    id String @id @default(cuid())
+
+    type NotificationType
+
+    title   String
+    message String?
+
+    isRead Boolean @default(false)
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    listingId String?
+    listing   Listing? @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+
+    @@index([userId, isRead])
 }
