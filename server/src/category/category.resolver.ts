@@ -1,33 +1,25 @@
-import { Resolver } from "@nestjs/graphql";
+import { Args, Query, Resolver } from "@nestjs/graphql";
+import { Listing } from "src/product/models/listing.model";
 import { CategoryService } from "./category.service";
+import { Catalog } from "./models/catalog.model";
 import { Category } from "./models/category.model";
 
 @Resolver(() => Category)
 export class CategoryResolver {
     constructor(private readonly categoryService: CategoryService) {}
 
-    // @Mutation(() => Category)
-    // createCategory(@Args("createCategoryInput") createCategoryInput: CreateCategoryInput) {
-    //     return this.categoryService.create(createCategoryInput);
-    // }
+    @Query(() => [Category], { name: "categories" })
+    findAll() {
+        return this.categoryService.findAll();
+    }
 
-    // @Query(() => [Category], { name: "category" })
-    // findAll() {
-    //     return this.categoryService.findAll();
-    // }
+    @Query(() => Catalog, { name: "catalog" })
+    getCatalogData(@Args("categorySlug") categorySlug: string) {
+        return this.categoryService.getCatalogData(categorySlug);
+    }
 
-    // @Query(() => Category, { name: "category" })
-    // findOne(@Args("id", { type: () => Int }) id: number) {
-    //     return this.categoryService.findOne(id);
-    // }
-
-    // @Mutation(() => Category)
-    // updateCategory(@Args("updateCategoryInput") updateCategoryInput: UpdateCategoryInput) {
-    //     return this.categoryService.update(updateCategoryInput.id, updateCategoryInput);
-    // }
-
-    // @Mutation(() => Category)
-    // removeCategory(@Args("id", { type: () => Int }) id: number) {
-    //     return this.categoryService.remove(id);
-    // }
+    @Query(() => [Listing], { name: "productsByCategoryPath" })
+    getProductsByCategoryPath(@Args("path") path: string) {
+        return this.categoryService.getProductsByCategoryPath(path);
+    }
 }

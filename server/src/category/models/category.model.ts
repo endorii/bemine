@@ -1,7 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { Attribute } from "src/attribute/models/attribute.model";
-import { Product } from "src/product/models/product.model";
-import { Section } from "src/section/models/section.model";
+import { Listing } from "src/product/models/listing.model";
 
 @ObjectType()
 export class Category {
@@ -15,13 +14,13 @@ export class Category {
     title: string;
 
     @Field()
-    sectionId: string;
+    path: string;
 
-    @Field(() => Section)
-    section: Section;
+    @Field({ nullable: true })
+    banner?: string;
 
-    @Field(() => [Product])
-    products: Product[];
+    @Field(() => [Listing])
+    listings: Listing[];
 
     @Field(() => [Attribute])
     attributes: Attribute[];
