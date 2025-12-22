@@ -9,5 +9,5 @@ export enum AttributeTypeEnum {
 
 registerEnumType(AttributeTypeEnum, {
     name: "AttributeType",
-    description: "Тип атрибуту",
+    description: "Attribute type",
 });

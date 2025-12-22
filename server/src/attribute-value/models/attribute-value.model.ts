@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { Attribute } from "src/attribute/models/attribute.model";
-import { Product } from "src/product/models/product.model";
+import { Listing } from "src/product/models/listing.model";
 
 @ObjectType()
 export class AttributeValue {
@@ -10,8 +10,8 @@ export class AttributeValue {
     @Field()
     productId: string;
 
-    @Field(() => Product)
-    product: Product;
+    @Field(() => Listing)
+    listing: Listing;
 
     @Field()
     attributeId: string;
