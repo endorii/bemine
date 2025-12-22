@@ -1,13 +1,13 @@
 import { gql } from "@apollo/client";
 
-export const GET_SECTIONS = gql`
-    query sections {
-        section {
+export const GET_CATEGORIES = gql`
+    query GetCategories {
+        categories {
             id
             title
             slug
             banner
-            categories {
+            children {
                 id
                 slug
                 title
