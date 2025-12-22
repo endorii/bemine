@@ -14,7 +14,7 @@ type Attribute {
   values: [AttributeValue!]!
 }
 
-"""Тип атрибуту"""
+"""Attribute type"""
 enum AttributeType {
   BOOLEAN
   NUMBER
@@ -27,24 +27,43 @@ type AttributeValue {
   attributeId: String!
   createdAt: DateTime!
   id: ID!
-  product: Product!
+  listing: Listing!
   productId: String!
   value: String!
 }
 
+type Catalog {
+  breadcrumbs: [CategoryBreadcrumb!]!
+  filters: [Filter!]!
+  subcategories: [Category!]!
+  totalProducts: Int!
+}
+
 type Category {
   attributes: [Attribute!]!
+  banner: String
   children: [Category!]!
   createdAt: DateTime!
   id: ID!
+  listings: [Listing!]!
   parent: Category
   parentId: String
-  products: [Product!]!
-  section: Section!
-  sectionId: String!
+  path: String!
   slug: String!
   title: String!
   updatedAt: DateTime!
+}
+
+type CategoryBreadcrumb {
+  id: String!
+  slug: String!
+  title: String!
+}
+
+"""Condition type"""
+enum ConditionType {
+  NEW
+  USED
 }
 
 """
@@ -52,28 +71,112 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Product {
+type Favorite {
+  id: String!
+  listing: Listing!
+  listingId: String!
+  user: User!
+  userId: String!
+}
+
+type Filter {
+  id: String!
+  label: String!
+  name: String!
+  type: String!
+  values: [FilterValue!]!
+}
+
+type FilterValue {
+  count: Int!
+  label: String!
+  value: String!
+}
+
+type Listing {
   category: Category!
   categoryId: String!
+  condition: ConditionType!
   createdAt: DateTime!
   description: String
-  id: ID!
+  id: String!
+  images: [String!]!
+  location: String!
   price: Int!
+  status: StatusType!
   title: String!
   updatedAt: DateTime!
+  user: User!
+  userId: String!
   values: [AttributeValue!]!
+  views: Float!
+}
+
+type Notification {
+  createdAt: DateTime!
+  id: String!
+  isRead: Boolean!
+  listing: Listing!
+  listingId: String!
+  message: String
+  title: String!
+  type: NotificationType!
+  user: User!
+  userId: String!
+}
+
+"""Notification Type"""
+enum NotificationType {
+  LISTING_APPROVED
+  LISTING_FAVORITED
+  LISTING_REJECTED
+  MESSAGE_RECEIVED
+  PRICE_CHANGED
+  SYSTEM
 }
 
 type Query {
-  section: [Section!]!
+  catalog(categorySlug: String!): Catalog!
+  categories: [Category!]!
+  productsByCategoryPath(path: String!): [Listing!]!
 }
 
-type Section {
-  banner: String
-  categories: [Category!]!
+"""Role Type"""
+enum RoleType {
+  ADMIN
+  MODERATOR
+  SELLER
+}
+
+"""Status Type"""
+enum StatusType {
+  ACTIVE
+  ARCHIVED
+  DRAFT
+  PENDING_MODERATION
+  REJECTED
+}
+
+type User {
+  avatarUrl: String
   createdAt: DateTime!
-  id: ID!
-  slug: String!
-  title: String!
+  email: String!
+  favorites: [Favorite!]!
+  hashedRefreshToken: String
+  id: String!
+  isOnline: Boolean!
+  isVerified: Boolean!
+  lastSeenAt: DateTime
+  listings: [Listing!]!
+  name: String!
+  notifications: [Notification!]!
+  password: String!
+  phone: String!
+  resetPasswordToken: String
+  resetPasswordTokenExpires: DateTime
+  role: RoleType!
+  surname: String!
   updatedAt: DateTime!
+  verificationToken: String
+  verificationTokenExpires: DateTime
 }

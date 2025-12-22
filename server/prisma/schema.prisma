@@ -28,6 +28,11 @@ enum ListingStatus {
     ARCHIVED
 }
 
+enum ConditionType {
+    USED
+    NEW
+}
+
 enum NotificationType {
     LISTING_APPROVED
     LISTING_REJECTED
@@ -37,24 +42,12 @@ enum NotificationType {
     SYSTEM
 }
 
-model Section {
-    id         String     @id @default(cuid())
-    slug       String     @unique
-    title      String
-    banner     String?
-    categories Category[]
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
 model Category {
-    id    String @id @default(cuid())
-    slug  String
-    title String
-
-    sectionId String
-    section   Section @relation(fields: [sectionId], references: [id])
+    id     String  @id @default(cuid())
+    slug   String
+    title  String
+    banner String?
+    path   String  @unique
 
     listings   Listing[]
     attributes Attribute[]
@@ -65,18 +58,17 @@ model Category {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-
-    @@unique([slug, sectionId])
 }
 
 model Listing {
-    id          String   @id @default(cuid())
+    id          String        @id @default(cuid())
     title       String
     description String?
     price       Int
-    images      String[]
-    views       Int      @default(0)
+    images      String[]      @default([])
+    views       Int           @default(0)
     location    String
+    condition   ConditionType @default(USED)
 
     status ListingStatus @default(DRAFT)
 
@@ -160,11 +152,13 @@ model User {
 }
 
 model Favorite {
-    id        String  @id @default(cuid())
-    userId    String  @map("user_id")
+    id String @id @default(cuid())
+
     listingId String  @map("listing_id")
     listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
-    user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    userId String @map("user_id")
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([userId, listingId])
 }
@@ -172,12 +166,12 @@ model Favorite {
 model Notification {
     id String @id @default(cuid())
 
-    type NotificationType
-
     title   String
     message String?
 
     isRead Boolean @default(false)
+
+    type NotificationType
 
     userId String
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)

@@ -6,8 +6,10 @@ import { AttributeValueModule } from "./attribute-value/attribute-value.module";
 import { AttributeModule } from "./attribute/attribute.module";
 import { CategoryModule } from "./category/category.module";
 import { PrismaModule } from "./prisma/prisma.module";
-import { ProductModule } from "./product/product.module";
-import { SectionModule } from "./section/section.module";
+import { ListingModule } from "./product/listing.module";
+import { UserModule } from './user/user.module';
+import { FavoritesModule } from './favorites/favorites.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
     imports: [
@@ -18,11 +20,13 @@ import { SectionModule } from "./section/section.module";
             autoSchemaFile: join(process.cwd(), "src/schema.gql"),
             sortSchema: true,
         }),
-        SectionModule,
         CategoryModule,
-        ProductModule,
+        ListingModule,
         AttributeModule,
         AttributeValueModule,
+        UserModule,
+        FavoritesModule,
+        NotificationModule,
     ],
     controllers: [],
     providers: [],

@@ -1,184 +1,155 @@
-import { AttributeType, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 async function main() {
-    // =====================
-    // 1️⃣ Sections
-    // =====================
-    const electronics = await prisma.section.create({
-        data: { title: "Electronics", slug: "electronics" },
+    console.log("Start seeding...");
+
+    // USERS
+    const users = await prisma.user.createMany({
+        data: [
+            {
+                email: "john.doe@example.com",
+                phone: "+1234567890",
+                password: "hashedpassword1",
+                name: "John",
+                surname: "Doe",
+                role: "SELLER",
+            },
+            {
+                email: "jane.smith@example.com",
+                phone: "+1987654321",
+                password: "hashedpassword2",
+                name: "Jane",
+                surname: "Smith",
+                role: "MODERATOR",
+            },
+        ],
+        skipDuplicates: true,
     });
 
-    const pets = await prisma.section.create({
-        data: { title: "Pets", slug: "pets" },
-    });
-
-    const home = await prisma.section.create({
-        data: { title: "Home & Garden", slug: "home-garden" },
-    });
-
-    // =====================
-    // 2️⃣ Categories
-    // =====================
-
-    // --- Electronics ---
-    const computers = await prisma.category.create({
+    // CATEGORIES
+    const electronics = await prisma.category.create({
         data: {
-            title: "Computers",
-            slug: "computers",
-            sectionId: electronics.id,
+            title: "Electronics",
+            slug: "electronics",
+            path: "electronics",
+            banner: null,
+            children: {
+                create: [
+                    { title: "Laptops", slug: "laptops", path: "electronics/laptops" },
+                    { title: "Phones", slug: "phones", path: "electronics/phones" },
+                ],
+            },
+        },
+        include: {
+            children: true, // <- тепер children буде доступний
         },
     });
 
-    const keyboards = await prisma.category.create({
+    const fashion = await prisma.category.create({
         data: {
-            title: "Keyboards",
-            slug: "keyboards",
-            sectionId: electronics.id,
-            parentId: computers.id,
+            title: "Fashion",
+            slug: "fashion",
+            path: "fashion",
+            banner: null,
+            children: {
+                create: [
+                    {
+                        title: "Men",
+                        slug: "men",
+                        path: "fashion/men",
+                    },
+                    {
+                        title: "Women",
+                        slug: "women",
+                        path: "fashion/women",
+                    },
+                ],
+            },
         },
     });
 
-    const monitors = await prisma.category.create({
-        data: {
-            title: "Monitors",
-            slug: "monitors",
-            sectionId: electronics.id,
-        },
-    });
-
-    // --- Pets ---
-    const dogs = await prisma.category.create({
-        data: { title: "Dogs", slug: "dogs", sectionId: pets.id },
-    });
-
-    const catFood = await prisma.category.create({
-        data: { title: "Cat Food", slug: "cat-food", sectionId: pets.id },
-    });
-
-    // --- Home & Garden ---
-    const furniture = await prisma.category.create({
-        data: { title: "Furniture", slug: "furniture", sectionId: home.id },
-    });
-
-    const gardening = await prisma.category.create({
-        data: { title: "Gardening Tools", slug: "gardening-tools", sectionId: home.id },
-    });
-
-    // =====================
-    // 3️⃣ Attributes
-    // =====================
-
-    // Electronics -> Computers
-    const ramAttr = await prisma.attribute.create({
-        data: {
-            name: "ram",
-            label: "RAM",
-            type: AttributeType.NUMBER,
-            categoryId: computers.id,
-        },
-    });
-
-    const brandAttr = await prisma.attribute.create({
+    // ATTRIBUTES
+    const laptopBrand = await prisma.attribute.create({
         data: {
             name: "brand",
             label: "Brand",
-            type: AttributeType.SELECT,
-            categoryId: computers.id,
+            type: "SELECT",
+            categoryId: electronics.children[0].id, // laptops
         },
     });
 
-    // Pets -> Dogs
-    const breedAttr = await prisma.attribute.create({
+    const laptopRam = await prisma.attribute.create({
         data: {
-            name: "breed",
-            label: "Breed",
-            type: AttributeType.TEXT,
-            categoryId: dogs.id,
+            name: "ram",
+            label: "RAM",
+            type: "NUMBER",
+            categoryId: electronics.children[0].id, // laptops
         },
     });
 
-    // Home & Garden -> Furniture
-    const materialAttr = await prisma.attribute.create({
-        data: {
-            name: "material",
-            label: "Material",
-            type: AttributeType.SELECT,
-            categoryId: furniture.id,
-        },
-    });
-
-    // =====================
-    // 4️⃣ Products
-    // =====================
-
-    // Computers
-    const laptop = await prisma.product.create({
-        data: {
-            title: "Gaming Laptop",
-            description: "Powerful laptop for gaming",
-            price: 1500,
-            categoryId: computers.id,
-        },
-    });
-
-    // Keyboards
-    const mechKeyboard = await prisma.product.create({
-        data: {
-            title: "Mechanical Keyboard",
-            description: "RGB Mechanical Keyboard",
-            price: 120,
-            categoryId: keyboards.id,
-        },
-    });
-
-    // Monitors
-    const monitor = await prisma.product.create({
-        data: {
-            title: "27 inch Monitor",
-            description: "4K monitor",
-            price: 400,
-            categoryId: monitors.id,
-        },
-    });
-
-    // Dogs
-    const golden = await prisma.product.create({
-        data: {
-            title: "Golden Retriever",
-            description: "Friendly dog",
-            price: 800,
-            categoryId: dogs.id,
-        },
-    });
-
-    // Furniture
-    const chair = await prisma.product.create({
-        data: {
-            title: "Office Chair",
-            description: "Ergonomic chair",
-            price: 200,
-            categoryId: furniture.id,
-        },
-    });
-
-    // =====================
-    // 5️⃣ AttributeValues
-    // =====================
-
-    await prisma.attributeValue.createMany({
+    // LISTINGS
+    const listings = await prisma.listing.createMany({
         data: [
-            { productId: laptop.id, attributeId: ramAttr.id, value: "16" },
-            { productId: laptop.id, attributeId: brandAttr.id, value: "Asus" },
-
-            { productId: golden.id, attributeId: breedAttr.id, value: "Golden Retriever" },
-
-            { productId: chair.id, attributeId: materialAttr.id, value: "Wood" },
+            {
+                title: "MacBook Pro 16",
+                description: "Powerful laptop from Apple",
+                price: 2500,
+                images: ["macbook1.jpg", "macbook2.jpg"],
+                location: "New York",
+                status: "ACTIVE",
+                categoryId: electronics.children[0].id,
+                userId: (await prisma.user.findFirst({ where: { email: "john.doe@example.com" } }))!
+                    .id,
+            },
+            {
+                title: "Dell XPS 13",
+                description: "Lightweight and powerful",
+                price: 1200,
+                images: ["dellxps1.jpg"],
+                location: "San Francisco",
+                status: "ACTIVE",
+                categoryId: electronics.children[0].id,
+                userId: (await prisma.user.findFirst({
+                    where: { email: "jane.smith@example.com" },
+                }))!.id,
+            },
         ],
     });
 
-    console.log("✅ Seed completed!");
+    // ATTRIBUTE VALUES
+    const macbookListing = await prisma.listing.findFirst({ where: { title: "MacBook Pro 16" } });
+    const dellListing = await prisma.listing.findFirst({ where: { title: "Dell XPS 13" } });
+
+    if (macbookListing && dellListing) {
+        await prisma.attributeValue.createMany({
+            data: [
+                {
+                    listingId: macbookListing.id,
+                    attributeId: laptopBrand.id,
+                    value: "Apple",
+                },
+                {
+                    listingId: dellListing.id,
+                    attributeId: laptopBrand.id,
+                    value: "Dell",
+                },
+                {
+                    listingId: macbookListing.id,
+                    attributeId: laptopRam.id,
+                    value: "16",
+                },
+                {
+                    listingId: dellListing.id,
+                    attributeId: laptopRam.id,
+                    value: "8",
+                },
+            ],
+        });
+    }
+
+    console.log("Seeding finished.");
 }
 
 main()
