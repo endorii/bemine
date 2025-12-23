@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { Listing } from "src/product/models/listing.model";
+import { Listing } from "src/listing/models/listing.model";
 import { User } from "src/user/models/user.model";
 import { NotificationTypeEnum } from "../enums/notification-type.enum";
 

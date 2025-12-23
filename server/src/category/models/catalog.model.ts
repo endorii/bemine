@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from "@nestjs/graphql";
+import { Breadcrumb } from "src/common/models/breadcrumb.model";
 import { Category } from "./category.model";
 
 @ObjectType()
@@ -42,18 +43,6 @@ export class Catalog {
     @Field(() => [Filter])
     filters: Filter[];
 
-    @Field(() => [CategoryBreadcrumb])
-    breadcrumbs: CategoryBreadcrumb[];
-}
-
-@ObjectType()
-export class CategoryBreadcrumb {
-    @Field()
-    id: string;
-
-    @Field()
-    title: string;
-
-    @Field()
-    slug: string;
+    @Field(() => [Breadcrumb])
+    breadcrumbs: Breadcrumb[];
 }

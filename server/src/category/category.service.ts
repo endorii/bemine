@@ -22,13 +22,10 @@ export class CategoryService {
             throw new NotFoundException(`Category with slug "${categorySlug}" not found`);
         }
 
-        // 🔹 всі категорії: поточна + діти (рекурсивно)
         const categoryIds = await this.getCategoryAndChildrenIds(category.id);
 
-        // 🔹 breadcrumbs
         const breadcrumbs = await this.buildBreadcrumbs(category.id);
 
-        // 🔹 total products (включно з дітьми)
         const totalProducts = await this.prisma.listing.count({
             where: {
                 categoryId: { in: categoryIds },
@@ -36,7 +33,6 @@ export class CategoryService {
             },
         });
 
-        // 🔹 атрибути (з усіх релевантних категорій)
         const attributes = await this.prisma.attribute.findMany({
             where: {
                 categoryId: { in: categoryIds },

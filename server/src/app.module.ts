@@ -5,11 +5,11 @@ import { join } from "path";
 import { AttributeValueModule } from "./attribute-value/attribute-value.module";
 import { AttributeModule } from "./attribute/attribute.module";
 import { CategoryModule } from "./category/category.module";
+import { FavoritesModule } from "./favorites/favorites.module";
+import { ListingModule } from "./listing/listing.module";
+import { NotificationModule } from "./notification/notification.module";
 import { PrismaModule } from "./prisma/prisma.module";
-import { ListingModule } from "./product/listing.module";
-import { UserModule } from './user/user.module';
-import { FavoritesModule } from './favorites/favorites.module';
-import { NotificationModule } from './notification/notification.module';
+import { UserModule } from "./user/user.module";
 
 @Module({
     imports: [

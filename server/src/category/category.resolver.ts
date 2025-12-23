@@ -1,5 +1,5 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
-import { Listing } from "src/product/models/listing.model";
+import { Listing } from "src/listing/models/listing.model";
 import { CategoryService } from "./category.service";
 import { Catalog } from "./models/catalog.model";
 import { Category } from "./models/category.model";

@@ -32,8 +32,14 @@ type AttributeValue {
   value: String!
 }
 
+type Breadcrumb {
+  id: String!
+  slug: String!
+  title: String!
+}
+
 type Catalog {
-  breadcrumbs: [CategoryBreadcrumb!]!
+  breadcrumbs: [Breadcrumb!]!
   filters: [Filter!]!
   subcategories: [Category!]!
   totalProducts: Int!
@@ -52,12 +58,6 @@ type Category {
   slug: String!
   title: String!
   updatedAt: DateTime!
-}
-
-type CategoryBreadcrumb {
-  id: String!
-  slug: String!
-  title: String!
 }
 
 """Condition type"""
@@ -112,6 +112,11 @@ type Listing {
   views: Float!
 }
 
+type ListingPage {
+  breadcrumbs: [Breadcrumb!]!
+  listing: Listing!
+}
+
 type Notification {
   createdAt: DateTime!
   id: String!
@@ -138,6 +143,7 @@ enum NotificationType {
 type Query {
   catalog(categorySlug: String!): Catalog!
   categories: [Category!]!
+  listingPageData(id: String!): ListingPage
   productsByCategoryPath(path: String!): [Listing!]!
 }
 

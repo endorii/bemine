@@ -1,7 +1,7 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { Favorite } from "src/favorites/models/favorite.model";
+import { Listing } from "src/listing/models/listing.model";
 import { Notification } from "src/notification/models/notification.model";
-import { Listing } from "src/product/models/listing.model";
 import { RoleTypeEnum } from "../enums/role-type.enum";
 
 @ObjectType()

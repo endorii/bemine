@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { Attribute } from "src/attribute/models/attribute.model";
-import { Listing } from "src/product/models/listing.model";
+import { Listing } from "src/listing/models/listing.model";
 
 @ObjectType()
 export class Category {
