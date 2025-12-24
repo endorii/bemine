@@ -7,8 +7,6 @@ import { print } from "graphql";
 export default async function CategoriesSection() {
     const data = await fetchGraphQL(print(GET_CATEGORIES));
 
-    console.log(data);
-
     return (
         <div className="flex flex-col">
             <SearchInput />

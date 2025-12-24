@@ -43,7 +43,7 @@ async function main() {
             },
         },
         include: {
-            children: true, // <- тепер children буде доступний
+            children: true,
         },
     });
 
@@ -70,13 +70,12 @@ async function main() {
         },
     });
 
-    // ATTRIBUTES
     const laptopBrand = await prisma.attribute.create({
         data: {
             name: "brand",
             label: "Brand",
             type: "SELECT",
-            categoryId: electronics.children[0].id, // laptops
+            categoryId: electronics.children[0].id,
         },
     });
 
@@ -85,7 +84,7 @@ async function main() {
             name: "ram",
             label: "RAM",
             type: "NUMBER",
-            categoryId: electronics.children[0].id, // laptops
+            categoryId: electronics.children[0].id,
         },
     });
 

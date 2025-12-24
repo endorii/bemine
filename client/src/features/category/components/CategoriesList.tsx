@@ -11,7 +11,7 @@ export function CategoriesList({ subcategories }: { subcategories: any[] }) {
                     return (
                         <Link
                             key={subcategory.id}
-                            href={subcategory.path}
+                            href={`/${subcategory.path}`}
                             className="flex flex-col items-center text-center">
                             <Image
                                 src="/product.jpg"

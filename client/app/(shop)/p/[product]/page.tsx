@@ -23,8 +23,6 @@ export default async function page({
 }) {
     const { product } = await params;
 
-    console.log(product);
-
     const data = await fetchGraphQL(print(GET_LISTING_PAGE), {
         id: product,
     });
